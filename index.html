@@ -1,0 +1,1274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>G. K. Anim — Personal CV</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  :root {
+    --bg: #0d0c0a;
+    --bg2: #141210;
+    --bg3: #1c1a16;
+    --gold: #c9a84c;
+    --gold2: #e8c96a;
+    --gold-dim: rgba(201,168,76,0.15);
+    --cream: #f0e8d8;
+    --muted: #7a7060;
+    --border: rgba(201,168,76,0.18);
+    --text: #d4c9b4;
+    --radius: 2px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%,-50%);
+    transition: width 0.2s, height 0.2s, background 0.2s;
+  }
+  .cursor-ring {
+    width: 32px; height: 32px;
+    border: 1px solid var(--gold);
+    border-radius: 50%;
+    position: fixed;
+    top: 0; left: 0;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%,-50%);
+    transition: transform 0.12s ease, width 0.2s, height 0.2s;
+    opacity: 0.5;
+  }
+  a:hover ~ .cursor, button:hover ~ .cursor { width: 14px; height: 14px; }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9997;
+    opacity: 0.5;
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 1000;
+    padding: 24px 60px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: linear-gradient(to bottom, rgba(13,12,10,0.95) 0%, transparent 100%);
+  }
+  .nav-logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 300;
+    color: var(--gold);
+    letter-spacing: 0.15em;
+    text-decoration: none;
+  }
+  .nav-links {
+    display: flex;
+    gap: 36px;
+    list-style: none;
+  }
+  .nav-links a {
+    text-decoration: none;
+    color: var(--muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--gold); }
+
+  /* Sections shared */
+  section { position: relative; }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 60px;
+  }
+
+  .section-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .section-label::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ═══════════════ HERO ═══════════════ */
+  #hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding-bottom: 80px;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 70% 40%, rgba(201,168,76,0.07) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 20% 80%, rgba(201,168,76,0.04) 0%, transparent 60%);
+  }
+
+  .hero-lines {
+    position: absolute;
+    top: 0; right: 0;
+    width: 50%;
+    height: 100%;
+    overflow: hidden;
+    opacity: 0.06;
+  }
+  .hero-lines svg { width: 100%; height: 100%; }
+
+  .hero-content { position: relative; z-index: 2; }
+
+  .hero-eyebrow {
+    font-size: 0.65rem;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s forwards;
+  }
+
+  .hero-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(4rem, 9vw, 9rem);
+    font-weight: 300;
+    line-height: 0.9;
+    color: var(--cream);
+    letter-spacing: -0.02em;
+    opacity: 0;
+    animation: fadeUp 1s 0.5s forwards;
+  }
+  .hero-name em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .hero-divider {
+    width: 80px;
+    height: 1px;
+    background: var(--gold);
+    margin: 36px 0;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.8s forwards;
+  }
+
+  .hero-tagline {
+    font-size: 1rem;
+    color: var(--muted);
+    max-width: 480px;
+    line-height: 1.8;
+    opacity: 0;
+    animation: fadeUp 0.8s 1s forwards;
+  }
+
+  .hero-photo-slot {
+    position: absolute;
+    right: 80px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 320px;
+    height: 420px;
+    border: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    overflow: hidden;
+    opacity: 0;
+    animation: fadeUp 1s 0.7s forwards;
+    transition: border-color 0.3s;
+  }
+  .hero-photo-slot:hover { border-color: var(--gold); }
+  .hero-photo-slot::before {
+    content: '';
+    position: absolute;
+    inset: 6px;
+    border: 1px solid var(--border);
+    pointer-events: none;
+  }
+  .hero-photo-slot img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: none;
+  }
+  .hero-photo-slot.has-image img { display: block; }
+  .hero-photo-slot.has-image .photo-placeholder { display: none; }
+  .photo-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    color: var(--muted);
+  }
+  .photo-placeholder svg { opacity: 0.4; }
+  .photo-placeholder span {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .photo-corner {
+    position: absolute;
+    width: 16px; height: 16px;
+    border-color: var(--gold);
+    border-style: solid;
+    opacity: 0.6;
+  }
+  .photo-corner.tl { top: 0; left: 0; border-width: 1px 0 0 1px; }
+  .photo-corner.tr { top: 0; right: 0; border-width: 1px 1px 0 0; }
+  .photo-corner.bl { bottom: 0; left: 0; border-width: 0 0 1px 1px; }
+  .photo-corner.br { bottom: 0; right: 0; border-width: 0 1px 1px 0; }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 0.6rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    opacity: 0;
+    animation: fadeUp 0.8s 1.4s forwards;
+  }
+  .hero-scroll::after {
+    content: '';
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--gold), transparent);
+    animation: scrollLine 2s 1.6s infinite;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes scrollLine {
+    0%   { transform: scaleY(0); transform-origin: top; }
+    50%  { transform: scaleY(1); transform-origin: top; }
+    51%  { transform: scaleY(1); transform-origin: bottom; }
+    100% { transform: scaleY(0); transform-origin: bottom; }
+  }
+
+  /* ═══════════════ ABOUT ═══════════════ */
+  #about { padding: 120px 0; }
+
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+
+  .about-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 28px;
+  }
+  .about-heading em { font-style: italic; color: var(--gold); }
+
+  .about-text { color: var(--muted); font-size: 0.9rem; line-height: 1.9; }
+  .about-text p { margin-bottom: 16px; }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+
+  .info-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 24px;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .info-card:hover {
+    border-color: var(--gold);
+    background: var(--bg3);
+  }
+  .info-card-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .info-card-value {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--cream);
+  }
+
+  /* ═══════════════ PHOTO GALLERY ═══════════════ */
+  #photos { padding: 80px 0; }
+
+  .photos-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 8px;
+  }
+  .photos-sub { color: var(--muted); font-size: 0.8rem; margin-bottom: 48px; }
+
+  .photo-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+  }
+
+  .photo-upload-slot {
+    aspect-ratio: 3/4;
+    border: 1px dashed var(--border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    cursor: pointer;
+    overflow: hidden;
+    position: relative;
+    transition: border-color 0.3s, background 0.3s;
+    background: var(--bg2);
+  }
+  .photo-upload-slot:hover {
+    border-color: var(--gold);
+    background: var(--bg3);
+  }
+  .photo-upload-slot img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: none;
+  }
+  .photo-upload-slot.has-image img { display: block; }
+  .photo-upload-slot.has-image .slot-label { display: none; }
+  .slot-label {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    pointer-events: none;
+  }
+  .slot-label span {
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+  }
+  .remove-photo {
+    position: absolute;
+    top: 8px; right: 8px;
+    background: rgba(13,12,10,0.85);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    width: 24px; height: 24px;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    cursor: pointer;
+    transition: color 0.2s, border-color 0.2s;
+    z-index: 5;
+  }
+  .remove-photo:hover { color: var(--gold); border-color: var(--gold); }
+  .photo-upload-slot.has-image .remove-photo { display: flex; }
+
+  /* ═══════════════ FAMILY ═══════════════ */
+  #family { padding: 120px 0; background: var(--bg2); }
+
+  .family-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 64px;
+    line-height: 1.1;
+  }
+  .family-heading em { font-style: italic; color: var(--gold); }
+
+  .family-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  .family-card {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding: 36px 28px;
+    position: relative;
+    transition: background 0.3s;
+  }
+  .family-card:hover { background: var(--bg3); }
+  .family-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 0; height: 1px;
+    background: var(--gold);
+    transition: width 0.4s;
+  }
+  .family-card:hover::after { width: 100%; }
+
+  .family-role {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .family-name {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.6rem;
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 10px;
+  }
+  .family-detail {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.7;
+  }
+  .family-location {
+    margin-top: 16px;
+    font-size: 0.7rem;
+    color: var(--gold);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .family-location::before {
+    content: '◈';
+    font-size: 0.6rem;
+  }
+
+  /* ═══════════════ HOME ═══════════════ */
+  #home { padding: 120px 0; }
+
+  .home-grid {
+    display: grid;
+    grid-template-columns: 5fr 4fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .home-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 28px;
+    line-height: 1.1;
+  }
+  .home-heading em { font-style: italic; color: var(--gold); }
+  .home-text { color: var(--muted); font-size: 0.88rem; line-height: 1.9; margin-bottom: 16px; }
+
+  .stat-row {
+    display: flex;
+    gap: 40px;
+    margin-top: 40px;
+    padding-top: 40px;
+    border-top: 1px solid var(--border);
+  }
+  .stat { }
+  .stat-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 3rem;
+    color: var(--gold);
+    line-height: 1;
+    font-weight: 300;
+  }
+  .stat-label {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .home-map {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 32px;
+    position: relative;
+  }
+  .map-label {
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+  }
+  .map-address {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.4rem;
+    color: var(--cream);
+    line-height: 1.5;
+    margin-bottom: 20px;
+  }
+  .map-details { font-size: 0.8rem; color: var(--muted); line-height: 1.8; }
+  .map-pin {
+    width: 40px; height: 40px;
+    border-radius: 50% 50% 50% 0;
+    background: var(--gold);
+    transform: rotate(-45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 24px;
+  }
+  .map-pin::after {
+    content: '';
+    width: 14px; height: 14px;
+    background: var(--bg);
+    border-radius: 50%;
+    transform: rotate(45deg);
+  }
+
+  /* ═══════════════ EDUCATION ═══════════════ */
+  #education { padding: 120px 0; background: var(--bg2); }
+
+  .edu-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 300;
+    color: var(--cream);
+    margin-bottom: 72px;
+  }
+  .edu-heading em { font-style: italic; color: var(--gold); }
+
+  .timeline { position: relative; }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 12px;
+    bottom: 0;
+    width: 1px;
+    background: var(--border);
+  }
+
+  .timeline-item {
+    padding-left: 40px;
+    padding-bottom: 56px;
+    position: relative;
+  }
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -4px;
+    top: 10px;
+    width: 9px; height: 9px;
+    border-radius: 50%;
+    background: var(--gold);
+    border: 2px solid var(--bg2);
+    box-shadow: 0 0 0 1px var(--gold);
+  }
+
+  .timeline-year {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 8px;
+  }
+  .timeline-degree {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    color: var(--cream);
+    font-weight: 300;
+    margin-bottom: 6px;
+  }
+  .timeline-school {
+    font-size: 0.88rem;
+    color: var(--muted);
+  }
+
+  /* ═══════════════ EXPERIENCE ═══════════════ */
+  #experience { padding: 120px 0; }
+
+  .exp-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 64px;
+  }
+
+  .exp-card {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    padding: 40px;
+    transition: border-color 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .exp-card::before {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transition: transform 0.4s;
+    transform-origin: left;
+  }
+  .exp-card:hover::before { transform: scaleX(1); }
+
+  .exp-number {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 4rem;
+    color: var(--border);
+    font-weight: 300;
+    line-height: 1;
+    margin-bottom: 20px;
+    transition: color 0.3s;
+  }
+  .exp-card:hover .exp-number { color: var(--gold-dim); }
+
+  .exp-period {
+    font-size: 0.62rem;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+  .exp-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.7rem;
+    color: var(--cream);
+    font-weight: 300;
+    margin-bottom: 8px;
+  }
+  .exp-company {
+    font-size: 0.85rem;
+    color: var(--muted);
+    margin-bottom: 20px;
+  }
+  .exp-desc {
+    font-size: 0.82rem;
+    color: var(--muted);
+    line-height: 1.8;
+    border-top: 1px solid var(--border);
+    padding-top: 20px;
+  }
+
+  /* Current / Entrepreneur card */
+  .exp-card.current {
+    border-color: rgba(201,168,76,0.35);
+    background: linear-gradient(135deg, var(--bg2), var(--bg3));
+  }
+  .exp-card.current .exp-number { color: rgba(201,168,76,0.12); }
+  .badge {
+    display: inline-block;
+    font-size: 0.58rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    background: var(--gold);
+    color: var(--bg);
+    padding: 3px 10px;
+    margin-bottom: 12px;
+  }
+
+  /* ═══════════════ VISION ═══════════════ */
+  #vision {
+    padding: 160px 0;
+    background: var(--bg2);
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+  }
+  #vision::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 50% 50%, rgba(201,168,76,0.06) 0%, transparent 70%);
+  }
+  .vision-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2rem, 4.5vw, 5rem);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.2;
+    max-width: 900px;
+    margin: 0 auto 40px;
+    position: relative;
+    z-index: 1;
+  }
+  .vision-quote em { font-style: italic; color: var(--gold); }
+  .vision-sub {
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--muted);
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ═══════════════ CONTACT ═══════════════ */
+  #contact { padding: 120px 0; }
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: start;
+  }
+  .contact-heading {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    font-weight: 300;
+    color: var(--cream);
+    line-height: 1.1;
+    margin-bottom: 20px;
+  }
+  .contact-heading em { font-style: italic; color: var(--gold); }
+  .contact-sub { color: var(--muted); font-size: 0.85rem; line-height: 1.8; margin-bottom: 40px; }
+
+  .contact-list { list-style: none; }
+  .contact-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 20px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .contact-list li:first-child { border-top: 1px solid var(--border); }
+  .contact-icon {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    min-width: 60px;
+    padding-top: 2px;
+  }
+  .contact-val {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem;
+    color: var(--cream);
+    line-height: 1.5;
+  }
+
+  /* Footer */
+  footer {
+    padding: 40px 60px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--muted);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+  }
+  footer span { color: var(--gold); }
+
+  /* Responsive */
+  @media (max-width: 900px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    .container { padding: 0 24px; }
+    .about-grid, .home-grid, .exp-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+    .family-grid { grid-template-columns: 1fr; }
+    .photo-grid { grid-template-columns: repeat(2, 1fr); }
+    .info-grid { grid-template-columns: 1fr; }
+    .hero-photo-slot { position: relative; right: auto; top: auto; transform: none; width: 240px; height: 300px; margin: 32px 0; }
+    #hero { padding-bottom: 60px; }
+    .hero-name { font-size: clamp(3rem, 12vw, 5rem); }
+    footer { padding: 24px; flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- NAVIGATION -->
+<nav>
+  <a href="#hero" class="nav-logo">G. K. Anim</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#family">Family</a></li>
+    <li><a href="#education">Education</a></li>
+    <li><a href="#experience">Career</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-lines">
+    <svg viewBox="0 0 500 800" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <line x1="100" y1="0" x2="100" y2="800" stroke="#c9a84c" stroke-width="0.5"/>
+      <line x1="200" y1="0" x2="200" y2="800" stroke="#c9a84c" stroke-width="0.5"/>
+      <line x1="300" y1="0" x2="300" y2="800" stroke="#c9a84c" stroke-width="0.5"/>
+      <line x1="400" y1="0" x2="400" y2="800" stroke="#c9a84c" stroke-width="0.5"/>
+      <line x1="0" y1="150" x2="500" y2="150" stroke="#c9a84c" stroke-width="0.5"/>
+      <line x1="0" y1="350" x2="500" y2="350" stroke="#c9a84c" stroke-width="0.5"/>
+      <line x1="0" y1="550" x2="500" y2="550" stroke="#c9a84c" stroke-width="0.5"/>
+      <line x1="0" y1="750" x2="500" y2="750" stroke="#c9a84c" stroke-width="0.5"/>
+    </svg>
+  </div>
+
+  <div class="container hero-content">
+    
+    <p class="hero-eyebrow">Personal Portfolio &amp; CV</p>
+    <h1 class="hero-name">G. K. <em>Anim</em></h1>
+    <div class="hero-divider"></div>
+    <p class="hero-tagline">IT Specialist turned Entrepreneur — building a marketing agency from the ground up.</p>
+  </div>
+
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container" style="padding-top:120px; padding-bottom:120px;">
+    <div class="about-grid">
+      <div class="fade-up">
+        <p class="section-label">About Me</p>
+        <h2 class="about-heading">A mind shaped by<br/><em>ambition &amp; roots</em></h2>
+        <div class="about-text">
+          <p>Born on the 28th of March, 1999, in a family with deep commercial heritage spanning decades in Old Dhaka's trading heart, G. K. Anim grew up understanding the value of enterprise and perseverance from an early age.</p>
+          <p>After excelling through Bangladesh's premier educational institutions and earning a BSc from BRAC University in 2024, he pivoted from corporate IT into the world of marketing — bringing technological precision to creative strategy.</p>
+          <p>Now channelling years of professional experience into founding a marketing agency, he is carving his identity as an entrepreneur — one campaign at a time.</p>
+        </div>
+      </div>
+
+      <div class="info-grid fade-up" style="transition-delay:0.2s;">
+        <div class="info-card">
+          <div class="info-card-label">Full Name</div>
+          <div class="info-card-value">Golam Kibria Anim</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-label">Date of Birth</div>
+          <div class="info-card-value">28 March 1999</div>
+        </div>
+        <div class="info-card" style="grid-column: span 2;">
+          <div class="info-card-label">Height</div>
+          <div class="info-card-value">5 feet and 7 inches</div>
+        </div>
+        <div class="info-card" style="grid-column: span 2;">
+          <div class="info-card-label">Education</div>
+          <div class="info-card-value">BSc — BRAC University, 2024</div>
+        </div>
+        <div class="info-card" style="grid-column: span 2;">
+          <div class="info-card-label">Location</div>
+          <div class="info-card-value">Shahi Bazar, Fatullah, Narayanganj</div>
+        </div>
+        <div class="info-card" style="grid-column: span 2;">
+          <div class="info-card-label">Current Focus</div>
+          <div class="info-card-value">Marketing Agency Founder &amp; Entrepreneur</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PHOTO GALLERY -->
+<section id="photos" style="border-top: 1px solid var(--border);">
+  <div class="container">
+    <p class="section-label">Gallery</p>
+    <h2 class="photos-heading">My Moments</h2>
+    <p class="photos-sub">Click any slot to upload a photo</p>
+    <div class="photo-grid" id="photoGrid">
+    
+
+  <div class="photo-upload-slot has-image">
+    <img src="Images/1.jpg" alt="Casual"/>
+  </div>
+
+  <div class="photo-upload-slot has-image">
+    <img src="Images/2.JPG" alt="Professional"/>
+  </div>
+
+  <div class="photo-upload-slot has-image">
+    <img src="Images/3.jpg" alt="Travel"/>
+  </div>
+
+  <div class="photo-upload-slot has-image">
+    <img src="Images/4.JPG" alt="Event"/>
+  </div>
+
+  <div class="photo-upload-slot has-image">
+    <img src="Images/5.JPG" alt="Family"/>
+  </div>
+
+  <div class="photo-upload-slot has-image">
+    <img src="Images/6.jpg" alt="Work"/>
+  </div>
+
+  <div class="photo-upload-slot has-image">
+    <img src="Images/7.jpg" alt="Outdoor"/>
+  </div>
+
+  <div class="photo-upload-slot has-image">
+    <img src="Images/8.jpg" alt="Memory"/>
+  </div>
+
+
+    </div>
+  </div>
+</section>
+
+<!-- FAMILY -->
+<section id="family">
+  <div class="container" style="padding-top:120px; padding-bottom:120px;">
+    <p class="section-label">Family</p>
+    <h2 class="family-heading">People who shaped<br/><em>the foundation</em></h2>
+    <div class="family-grid">
+
+      <div class="family-card fade-up">
+        <div class="family-role">Father</div>
+        <div class="family-name">Alauddin Ahmed</div>
+        <div class="family-detail">Businessman with 40 years of commercial legacy. Founder and owner of <strong style="color:var(--cream);">Shilpi Rice Agency</strong> — an owned establishment in the heart of Old Dhaka, a testament to decades of dedication.</div>
+        <div class="family-location">Old Dhaka, Bangladesh</div>
+      </div>
+
+      <div class="family-card fade-up" style="transition-delay:0.1s;">
+        <div class="family-role">Mother</div>
+        <div class="family-name">Maksuda Begum</div>
+        <div class="family-detail">The quiet strength of the household. A devoted homemaker who has been the emotional backbone of the family through every milestone and challenge.</div>
+        <div class="family-location">Narayanganj, Bangladesh</div>
+      </div>
+
+      <div class="family-card fade-up" style="transition-delay:0.2s;">
+        <div class="family-role">Elder Brother</div>
+        <div class="family-name">Anik Rahaman</div>
+        <div class="family-detail">Settled with his family in the vibrant city of Barcelona, Spain. </div>
+        <div class="family-location">Barcelona, Spain 🇪🇸</div>
+      </div>
+
+      <div class="family-card fade-up" style="transition-delay:0.3s;">
+        <div class="family-role">Elder Sister</div>
+        <div class="family-name">Afsana Marium</div>
+        <div class="family-detail">Settled with her entire family in Germany.</div>
+        <div class="family-location">Germany 🇩🇪</div>
+      </div>
+
+      <div class="family-card fade-up" style="transition-delay:0.4s;">
+        <div class="family-role">Brother-in-law</div>
+        <div class="family-name">Raju Ahmed</div>
+        <div class="family-detail">A seasoned technology leader serving as IT Head at Newyorker — one of Europe's major retail brands. His expertise in the tech industry has long inspired Anim's own digital path.</div>
+        <div class="family-location">Germany 🇩🇪</div>
+      </div>
+
+      <div class="family-card fade-up" style="transition-delay:0.5s; background: var(--bg3);">
+        <div class="family-role">The Residence</div>
+        <div class="family-name">Alauddin Estate</div>
+        <div class="family-detail">A proud 4-storied family building in Shahi Bazar, Fatullah, each floor hosting 4 units. The Anim family resides in a spacious <strong style="color:var(--cream);">3,000 sq. ft.</strong> home — a symbol of their decades of hard work.</div>
+        <div class="family-location">Fatullah, Narayanganj</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- HOME / LOCATION -->
+<section id="home">
+  <div class="container">
+    <div class="home-grid">
+      <div class="fade-up">
+        <p class="section-label">Residence</p>
+        <h2 class="home-heading">Grounded in<br/><em>Narayanganj</em></h2>
+        <p class="home-text">Home has always been Shahi Bazar, Fatullah — a neighbourhood in Narayanganj with strong community ties and a rich mercantile tradition. It is from here that dreams are built and legacies are extended.</p>
+        <p class="home-text">The family building stands as a physical embodiment of generational achievement — four floors, multiple families, one shared vision of prosperity and unity.</p>
+        <div class="stat-row">
+          <div class="stat">
+            <div class="stat-number">4</div>
+            <div class="stat-label">Floors</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">16</div>
+            <div class="stat-label">Total Units</div>
+          </div>
+          <div class="stat">
+            <div class="stat-number">3K</div>
+            <div class="stat-label">Sq. Ft. Home</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="home-map fade-up" style="transition-delay:0.2s;">
+        <div class="map-label">Address</div>
+        <div class="map-address">Shahi Bazar<br/>Fatullah, Narayanganj</div>
+        <div class="map-details">
+          District: Narayanganj<br/>
+          Division: Dhaka<br/>
+          Country: Bangladesh
+        </div>
+        <div class="map-pin"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="container" style="padding-top:120px; padding-bottom:120px;">
+    <p class="section-label">Education</p>
+    <h2 class="edu-heading">Academic <em>Journey</em></h2>
+    <div class="timeline">
+
+      <div class="timeline-item fade-up">
+        <div class="timeline-year">2020 — 2024</div>
+        <div class="timeline-degree">Bachelor of Science (BSc) - 2024</div>
+        <div class="timeline-school">BRAC University, Dhaka — Graduated 2024</div>
+      </div>
+
+      <div class="timeline-item fade-up" style="transition-delay:0.15s;">
+        <div class="timeline-year">Higher Secondary Certificate</div>
+        <div class="timeline-degree">HSC - 2017</div>
+        <div class="timeline-school">Notre Dame College, Dhaka — One of Bangladesh's most prestigious institutions</div>
+      </div>
+
+      <div class="timeline-item fade-up" style="transition-delay:0.3s;">
+        <div class="timeline-year">Secondary School Certificate</div>
+        <div class="timeline-degree">SSC - 2015</div>
+        <div class="timeline-school">Ideal School and College, Dhaka — A flagship educational establishment</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="container" style="padding-top:120px; padding-bottom:120px;">
+    <p class="section-label">Career</p>
+    <h2 style="font-family:'Cormorant Garamond',serif; font-size:clamp(2.5rem,4vw,4rem); font-weight:300; color:var(--cream); margin-bottom:8px;">Professional <em style="font-style:italic;color:var(--gold);">Timeline</em></h2>
+
+    <div class="exp-grid">
+      <div class="exp-card fade-up">
+        <div class="exp-number">01</div>
+        <div class="exp-period">Until December 2025</div>
+        <div class="exp-title">IT Specialist</div>
+        <div class="exp-company">Rapid Pack Ltd.</div>
+        <div class="exp-desc">Served as IT Specialist at Rapid Pack Ltd., overseeing technology infrastructure, systems support, and digital operations — building a solid foundation in enterprise technology management.</div>
+      </div>
+
+      <div class="exp-card current fade-up" style="transition-delay:0.2s;">
+        <div class="badge">Current</div>
+        <div class="exp-number">02</div>
+        <div class="exp-period">2026 — Present</div>
+        <div class="exp-title">Founder &amp; Entrepreneur</div>
+        <div class="exp-company">Marketing Agency (In Development)</div>
+        <div class="exp-desc">Channelling IT expertise and a sharp marketing instinct into building a full-service marketing agency from the ground up. Focused on digital strategy, brand identity, and growth marketing for local and regional businesses.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VISION -->
+<section id="vision">
+  <div class="container">
+    <p class="section-label" style="justify-content:center; margin-bottom:32px;">I Believe </p>
+    <div class="vision-quote fade-up">
+      "The best among you are those who have <br/>the best <em>manners and character"</em> 
+    </div>
+    <p class="vision-sub">G. K. Anim · Entrepreneur · Narayanganj, Bangladesh</p>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="fade-up">
+        <p class="section-label">Contact</p>
+        <h2 class="contact-heading">Let's <em>Connect</em></h2>
+        <p class="contact-sub">Open to collaborations, business partnerships, and conversations about marketing, entrepreneurship, and technology.</p>
+      </div>
+
+      <div class="fade-up" style="transition-delay:0.2s;">
+        <ul class="contact-list">
+          <li>
+            <span class="contact-icon">Location</span>
+            <span class="contact-val">Shahi Bazar, Fatullah<br/>Narayanganj, Bangladesh</span>
+          </li>
+          <li>
+            <span class="contact-icon">Email</span>
+            <span class="contact-val">gkanim.dm@gmail.com</span>
+          </li>
+          <li>
+            <span class="contact-icon">Focus</span>
+            <span class="contact-val">Marketing Agency &amp; Digital Strategy</span>
+          </li>
+          <li>
+            <span class="contact-icon">Status</span>
+            <span class="contact-val" style="color:var(--gold);">Open to Opportunities</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span>G. K. Anim</span>
+  <span>© 2025 · All Rights Reserved · Narayanganj, Bangladesh</span>
+</footer>
+
+<script>
+// ─── Custom Cursor ───────────────────────────────────────
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursorRing');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top  = my + 'px';
+});
+
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  cursorRing.style.left = rx + 'px';
+  cursorRing.style.top  = ry + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+document.querySelectorAll('a, button, .photo-upload-slot, .hero-photo-slot, .info-card, .family-card').forEach(el => {
+  el.addEventListener('mouseenter', () => { cursor.style.width = '14px'; cursor.style.height = '14px'; cursorRing.style.width = '48px'; cursorRing.style.height = '48px'; });
+  el.addEventListener('mouseleave', () => { cursor.style.width = '8px'; cursor.style.height = '8px'; cursorRing.style.width = '32px'; cursorRing.style.height = '32px'; });
+});
+
+// ─── Scroll Animation ─────────────────────────────────────
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+// ─── Hero Photo Slot ──────────────────────────────────────
+const heroSlot  = document.getElementById('heroSlot');
+const heroInput = document.getElementById('heroInput');
+const heroImg   = document.getElementById('heroImg');
+
+heroSlot.addEventListener('click', () => heroInput.click());
+heroInput.addEventListener('change', e => {
+  const file = e.target.files[0];
+  if (!file) return;
+  const url = URL.createObjectURL(file);
+  heroImg.src = url;
+  heroSlot.classList.add('has-image');
+});
+
+// ─── Photo Gallery Slots ──────────────────────────────────
+
+labels.forEach((label, i) => {
+  const slot = document.createElement('div');
+  slot.className = 'photo-upload-slot';
+  slot.innerHTML = `
+    <div class="slot-label">
+      <svg width="28" height="28" viewBox="0 0 28 28" fill="none">
+        <rect x="2" y="5" width="24" height="18" rx="1.5" stroke="#c9a84c" stroke-width="1"/>
+        <circle cx="14" cy="13" r="4" stroke="#c9a84c" stroke-width="1"/>
+        <path d="M6 23 Q14 15 22 23" stroke="#c9a84c" stroke-width="1"/>
+      </svg>
+      <span>${label}</span>
+    </div>
+    <img src="" alt="${label}" />
+    <button class="remove-photo" title="Remove">✕</button>
+    <input type="file" accept="image/*" style="display:none"/>
+  `;
+  const input = slot.querySelector('input');
+  const img   = slot.querySelector('img');
+  const rmBtn = slot.querySelector('.remove-photo');
+
+  slot.addEventListener('click', e => {
+    if (e.target === rmBtn || rmBtn.contains(e.target)) return;
+    input.click();
+  });
+
+  input.addEventListener('change', e => {
+    const file = e.target.files[0];
+    if (!file) return;
+    img.src = URL.createObjectURL(file);
+    slot.classList.add('has-image');
+  });
+
+  rmBtn.addEventListener('click', e => {
+    e.stopPropagation();
+    img.src = '';
+    input.value = '';
+    slot.classList.remove('has-image');
+  });
+
+  photoGrid.appendChild(slot);
+});
+
+// ─── Active Nav on Scroll ─────────────────────────────────
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+window.addEventListener('scroll', () => {
+  let current = '';
+  sections.forEach(s => {
+    if (window.scrollY >= s.offsetTop - 120) current = s.id;
+  });
+  navLinks.forEach(a => {
+    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--gold)' : '';
+  });
+});
+</script>
+</body>
+</html>
